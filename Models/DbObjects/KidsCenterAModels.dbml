@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="KidsCenterA" Class="KidsCenterAModelsDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=KidsCenterA;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="KidsCenterAConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.AgeCategory" Member="AgeCategories">
+    <Type Name="AgeCategory">
+      <Column Name="AgeCategoryId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AgeCategoryName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="AgeCategory_Course" Member="Courses" ThisKey="AgeCategoryId" OtherKey="AgeCategoryId" Type="Course" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Children" Member="Childrens">
+    <Type Name="Children">
+      <Column Name="ChildId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Age" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNo" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Association Name="Children_CourseMembership" Member="CourseMemberships" ThisKey="ChildId" OtherKey="ChildId" Type="CourseMembership" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CourseCategory" Member="CourseCategories">
+    <Type Name="CourseCategory">
+      <Column Name="CourseCategoryId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CourseCategoryName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="CourseCategory_Course" Member="Courses" ThisKey="CourseCategoryId" OtherKey="CourseCategoryId" Type="Course" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CourseMembership" Member="CourseMemberships">
+    <Type Name="CourseMembership">
+      <Column Name="MembershipId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CourseId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ChildId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Children_CourseMembership" Member="Children" ThisKey="ChildId" OtherKey="ChildId" Type="Children" IsForeignKey="true" />
+      <Association Name="Course_CourseMembership" Member="Course" ThisKey="CourseId" OtherKey="CourseId" Type="Course" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Courses" Member="Courses">
+    <Type Name="Course">
+      <Column Name="CourseId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CourseCategoryId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AgeCategoryId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CoursePrice" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TrainerId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Course_CourseMembership" Member="CourseMemberships" ThisKey="CourseId" OtherKey="CourseId" Type="CourseMembership" />
+      <Association Name="AgeCategory_Course" Member="AgeCategory" ThisKey="AgeCategoryId" OtherKey="AgeCategoryId" Type="AgeCategory" IsForeignKey="true" />
+      <Association Name="CourseCategory_Course" Member="CourseCategory" ThisKey="CourseCategoryId" OtherKey="CourseCategoryId" Type="CourseCategory" IsForeignKey="true" />
+      <Association Name="Trainer_Course" Member="Trainer" ThisKey="TrainerId" OtherKey="TrainerId" Type="Trainer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Trainers" Member="Trainers">
+    <Type Name="Trainer">
+      <Column Name="TrainerId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNo" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Association Name="Trainer_Course" Member="Courses" ThisKey="TrainerId" OtherKey="TrainerId" Type="Course" />
+    </Type>
+  </Table>
+</Database>
